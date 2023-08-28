@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <link rel="stylesheet" href="../scr/style/modulos.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+    <title>ChatOps Console - Envia documento</title>
+</head>
+<body>
+    <div class="panel">
+        <div class="panel-header">
+            <h2>Remover Restrição</h2>
+        </div>
+        <form id="unbanChatMemberForm">
+            <div class="input-container">
+                <label for="groupName">Nome do Grupo:</label>
+                <input type="text" id="groupName" name="groupName" class="styled-input" required>
+            </div>
+            <div class="input-container">
+                <label for="username">Username do Usuário:</label>
+                <input type="text" id="username" name="username" class="styled-input" required>
+            </div>
+            <button type="submit" class="send-button"><i class="bi bi-telegram"></i> Remover Restrição</button>
+        </form>
+    </div>
+    <script>
+        const apiKey = '6099614387:AAE60rOeZcQRux4AwAB5e6_cpY38pShCmXQ'; // Substitua pelo seu token de acesso à API do Telegram
+
+        const unbanChatMemberForm = document.getElementById('unbanChatMemberForm');
+        unbanChatMemberForm.addEventListener('submit', async (event) => {
+            event.preventDefault();
+
+            const groupName = document.getElementById('groupName').value;
+            const username = document.getElementById('username').value;
+
+            if (!groupName || !username) {
+                console.error('Preencha todos os campos.');
+                return;
+            }
+
+            try {
+                const response = await fetch(`https://api.telegram.org/bot${apiKey}/unbanChatMember?chat_id=${groupName}&username=${username}`, {
+                    method: 'GET',
+                });
+
+                const responseData = await response.json();
+                console.log(responseData);
+            } catch (error) {
+                console.error('Erro:', error.message);
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <link rel="stylesheet" href="../scr/style/modulos.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+    <title>ChatOps Console - Fixar Mensagem</title>
+</head>
+<body>
+    <div class="panel">
+        <div class="panel-header">
+            <h2>Fixar Mensagem</h2>
+        </div>
+        <form id="pinMessageForm" class="message-form">
+            <div class="input-container">
+                <label for="chat">Nome do Grupo ou Canal (@nome_do_grupo):</label>
+                <input type="text" id="chat" name="chat" placeholder="Exemplo: @grupodoze" required>
+            </div>
+            <div class="input-container">
+                <label for="messageId">ID da Mensagem:</label>
+                <input type="text" id="messageId" name="messageId" placeholder="Digite o ID da mensagem a ser fixada..." required>
+            </div>
+            <button type="submit" class="send-button"><i class="bi bi-pin-angle"></i> Fixar Mensagem</button>
+        </form>
+    </div>
+
+    <script>
+        document.getElementById("pinMessageForm").addEventListener("submit", function(event) {
+            event.preventDefault();
+
+            const chat = document.getElementById("chat").value;
+            const messageId = document.getElementById("messageId").value;
+
+            const telegramUrl = `https://api.telegram.org/bot6099614387:AAE60rOeZcQRux4AwAB5e6_cpY38pShCmXQ/pinChatMessage?chat_id=${chat}&message_id=${messageId}`;
+
+            fetch(telegramUrl)
+                .then(response => response.json())
+                .then(data => {
+                    console.log(data);
+                    if (data.ok) {
+                        alert("Mensagem fixada com sucesso!");
+                    } else {
+                        alert("Erro ao fixar mensagem. Verifique o nome do grupo/canal e o ID da mensagem.");
+                    }
+                })
+                .catch(error => {
+                    console.error(error);
+                    alert("Erro ao fixar mensagem. Verifique sua conexão com a internet.");
+                });
+        });
+    </script>
+</body>
+</html>

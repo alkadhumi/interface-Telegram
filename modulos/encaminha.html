@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../scr/style/modulos.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+    <title>ChatOps Console - Encaminhar Mensagem</title>
+</head>
+
+<body>
+    <div class="panel">
+        <div class="panel-header">
+            <h2>Encaminhar Mensagem</h2>
+        </div>
+        <form id="forwardMessageForm" class="message-form">
+            <div class="input-container">
+                <label for="from_chat">Nome do Grupo ou Canal de Origem (@nome_do_grupo):</label>
+                <input type="text" id="from_chat" name="from_chat" placeholder="Exemplo: @grupodoze" required>
+            </div>
+            <div class="input-container">
+                <label for="to_chat">Nome do Grupo ou Canal de Destino (@nome_do_grupo):</label>
+                <input type="text" id="to_chat" name="to_chat" placeholder="Exemplo: @grupodotreze" required>
+            </div>
+            <div class="input-container">
+                <label for="message_id">ID da Mensagem a ser Encaminhada:</label>
+                <input type="text" id="message_id" name="message_id" placeholder="Digite o ID da mensagem a ser encaminhada" required>
+            </div>
+            <button type="submit" class="send-button"><i class="bi bi-forward"></i> Encaminhar Mensagem</button>
+        </form>
+    </div>
+
+    <script>
+        // Código JavaScript para encaminhar a mensagem usando a função forwardMessage
+        document.addEventListener('DOMContentLoaded', function() {
+            const forwardMessageForm = document.getElementById('forwardMessageForm');
+
+            forwardMessageForm.addEventListener('submit', async function(event) {
+                event.preventDefault();
+
+                const fromChat = document.getElementById('from_chat').value.trim();
+                const toChat = document.getElementById('to_chat').value.trim();
+                const messageId = document.getElementById('message_id').value.trim();
+
+                if (fromChat === '' || toChat === '' || messageId === '') {
+                    alert('Por favor, preencha todos os campos.');
+                    return;
+                }
+
+           
+                try {
+                    const response = await fetch(`https://api.telegram.org/bot6099614387:AAE60rOeZcQRux4AwAB5e6_cpY38pShCmXQ/forwardMessage`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({
+                            chat_id: toChat,
+                            from_chat_id: fromChat,
+                            message_id: messageId,
+                        }),
+                    });
+
+                    const responseData = await response.json();
+                    console.log(responseData);
+                } catch (error) {
+                    console.error('Erro:', error.message);
+                }
+          
+            });
+        });
+    </script>
+</body>
+</html>

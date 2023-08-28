@@ -1,0 +1,56 @@
+
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <link rel="stylesheet" href="../scr/style/modulos.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+    <title>ChatOps Console - Enviar Mensagem</title>
+</head>
+
+<body>
+    <div class="panel">
+        <div class="panel-header">
+            <h2>Enviar Mensagem</h2>
+        </div>
+        <form id="sendMessageForm" class="message-form">
+            <div class="input-container">
+                <label for="group">Nome do Grupo (@nome_do_grupo):</label>
+                <input type="text" id="group" name="group" placeholder="Exemplo: @grupodoze" required>
+            </div>
+            <div class="input-container">
+                <label for="message">Mensagem:</label>
+                <input type="text" id="message" name="message" placeholder="Digite sua mensagem aqui..." required>
+            </div>
+            <button type="submit" class="send-button"><i class="bi bi-telegram"></i> Enviar</button>
+        </form>
+    </div>
+
+    <script>
+        document.getElementById("sendMessageForm").addEventListener("submit", function(event) {
+            event.preventDefault();
+
+            const group = document.getElementById("group").value;
+            const message = document.getElementById("message").value;
+
+            const telegramUrl = `https://api.telegram.org/bot6099614387:AAE60rOeZcQRux4AwAB5e6_cpY38pShCmXQ/sendMessage?chat_id=${group}&text=${encodeURIComponent(message)}`;
+
+            fetch(telegramUrl)
+                .then(response => response.json())
+                .then(data => {
+                    console.log(data);
+                    if (data.ok) {
+                        alert("Mensagem enviada com sucesso!");
+                    } else {
+                        alert("Erro ao enviar mensagem. Verifique o nome do grupo e o token do bot.");
+                    }
+                })
+                .catch(error => {
+                    console.error(error);
+                    alert("Erro ao enviar mensagem. Verifique sua conexão com a internet.");
+                });
+        });
+    </script>
+</body>
+</html>
