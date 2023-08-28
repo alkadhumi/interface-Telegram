@@ -4,5 +4,21 @@ O ChatOps é uma poderosa metodologia que integra comunicação instantânea e a
 
 ## Getting Started
 
+Site:https://chatopsconsole.vercel.app/
+
+bot:https://t.me/groupOps_bot
+
+
+## Documentação da API
+
+#### Retorna todos os itens
+
+```http
+  GET https://api.telegram.org/bot${apiKey}/unbanChatMember?chat_id=${groupName}&username=${username}
+```
+
+| Parâmetro   | Tipo       | Descrição                           |
+| :---------- | :--------- | :---------------------------------- |
+| `api_key` | `string` | **Obrigatório**. A chave da sua API |
 
 
